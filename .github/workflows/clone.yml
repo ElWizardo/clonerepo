@@ -1,0 +1,37 @@
+name: Clone Public Repository Workflow
+
+on:
+  push:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+  
+permissions:
+  contents: write
+  
+jobs:
+    
+  job-public-repo-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this repo
+        uses: actions/checkout@v2
+        
+      - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
+        uses: GuillaumeFalourd/clone-github-repo-action@main
+        with:
+          owner: 'Azure'
+          repository: 'Enterprise-Scale-for-AVS'
+        
+      - name: Access cloned repository content
+        run: |
+          echo "ROOT"
+          ls -la
+          echo "CLONED REPO"
+          cd Enterprise-Scale-for-AVS
+          ls -la
+          git remote add ilijarepo https://ElWizardo:${{ secrets.WORKFLOW_TOKEN }}@github.com/ElWizardo/clonerepo.git
+          git remote set-url ilijarepo https://ElWizardo:${{ secrets.WORKFLOW_TOKEN }}@github.com/ElWizardo/clonerepo.git
+          git remote -v
+          echo "PUSHING REPO"
+          git push ilijarepo main
