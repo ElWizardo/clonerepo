@@ -34,4 +34,4 @@ jobs:
           git remote set-url ilijarepo https://ElWizardo:${{ secrets.WORKFLOW_TOKEN }}@github.com/ElWizardo/clonerepo.git
           git remote -v
           echo "PUSHING REPO"
-          git push ilijarepo main
+          git push ilijarepo clone
